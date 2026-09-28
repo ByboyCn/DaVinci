@@ -1,0 +1,30 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net472</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>disable</Nullable>
+        <AssemblyName>DaVinci</AssemblyName>
+        <RootNamespace>DaVinci</RootNamespace>
+        <Version>0.1.0</Version>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DebugType>portable</DebugType>
+        <!-- Game install: build output goes straight into BepInEx plugins -->
+        <DSPGameDir Condition="'$(DSPGameDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Dyson Sphere Program\</DSPGameDir>
+        <DSPGameDir>$([MSBuild]::EnsureTrailingSlash('$(DSPGameDir)'))</DSPGameDir>
+        <PluginOutputDirectory>$(DSPGameDir)BepInEx\plugins\DaVinci\</PluginOutputDirectory>
+        <OutputPath>$(PluginOutputDirectory)</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Core" Version="5.4.17" PrivateAssets="all" />
+        <PackageReference Include="UnityEngine.Modules" Version="2022.3.53" IncludeAssets="compile" PrivateAssets="all" />
+        <PackageReference Include="DysonSphereProgram.GameLibs" Version="*-*" IncludeAssets="compile" PrivateAssets="all" />
+        <PackageReference Include="protobuf-net" Version="3.2.30" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    </ItemGroup>
+</Project>
